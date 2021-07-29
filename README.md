@@ -5,11 +5,13 @@ create a new gateway integration.
 
 ## Usage
 
-1. Download this repo to a folder on your computer
+1. [Download this repo](https://github.com/vanilophp/payment-gateway-skeleton/archive/refs/heads/master.zip) to a folder on your computer
 2. Extract the zip and change to that folder
-3. Run `php init.php`
+3. Run `php init.php` on a terminal
 4. Answer the questions
 5. Use the generated code
+
+![cli_screenshot.png](cli_screenshot.png)
 
 ## Variables
 
