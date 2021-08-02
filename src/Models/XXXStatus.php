@@ -17,4 +17,17 @@ class XXXStatus extends Enum
     // - "XXXPaymentStatus",
     // - "XXXInvoiceStatus",
     // - etc.
+
+    // Add constants as possible values.
+    // See: https://vanilo.io/docs/2.x/enums
+
+    // The values below are just examples, take the actual
+    // list of possible values from the {:payment_gateway_name:} documentation:
+    const CREATED = 'created';
+    const PENDING_OK = 'pending_ok';
+    const INVALID_DATA = 'invalid_data';
+    const FRAUD_CHECK = 'fraud_check';
+    const AUTH_OK = 'auth_ok';
+    const CAPTURED = 'captured';
+    const FRAUD_DETECTED = 'fraud_detected';
 }

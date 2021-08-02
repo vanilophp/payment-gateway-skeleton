@@ -11,7 +11,7 @@ use Vanilo\Payment\Models\PaymentStatusProxy;
 use {:name_space_root:}\Models\XXXStatus;
 
 
-class XXXPaymentResponse
+class XXXPaymentResponse implements PaymentResponse
 {
     private string $paymentId;
 
@@ -73,6 +73,33 @@ class XXXPaymentResponse
             // it usually takes the native status, message
             // or other data from the gateway callback
             // and applies mapping to Vanilo Status
+
+            // Use the `PaymentStatusProxy` when creating values
+            // in order to keep the status enum customizable
+
+            // >>> **Example** for mapping status from the native status
+            switch ($this->getNativeStatus()->value()) {
+                case XXXStatus::CREATED:
+                case XXXStatus::PENDING_OK:
+                    $this->status = PaymentStatusProxy::PENDING();
+                    break;
+                case XXXStatus::AUTH_OK:
+                    $this->status = PaymentStatusProxy::AUTHORIZED();
+                    break;
+                case XXXStatus::INVALID_DATA:
+                case XXXStatus::FRAUD_DETECTED:
+                    $this->status = PaymentStatusProxy::DECLINED();
+                    break;
+                case XXXStatus::CAPTURED:
+                    $this->status = PaymentStatusProxy::PAID();
+                    break;
+                case XXXStatus::FRAUD_CHECK:
+                    $this->status = PaymentStatusProxy::ON_HOLD();
+                    break;
+                default:
+                    $this->status = PaymentStatusProxy::DECLINED();
+            }
+            // End of Example <<<
         }
 
         return $this->status;
