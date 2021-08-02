@@ -30,6 +30,10 @@ class XXXPaymentRequest implements PaymentRequest
 
     public function willRedirect(): bool
     {
+        // Set this to false or true depending on the nature of the gateway
+        // Off-site gateways set this to `true`, on-site ones to `false`
+        // Some gateway support both; if your implementation supports
+        // both return true/false depending on the particular case
         return true;
     }
 
