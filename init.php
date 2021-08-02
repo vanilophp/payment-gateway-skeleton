@@ -52,6 +52,17 @@ function slug($str, $separator = '-'): string
     return trim($str, $separator);
 }
 
+function starts_with($haystack, $needles)
+{
+    foreach ((array) $needles as $needle) {
+        if ((string) $needle !== '' && strncmp($haystack, $needle, strlen($needle)) === 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function summarize(Configuration $cfg)
 {
     echo "\n\n";
@@ -100,11 +111,6 @@ function generate_code(Configuration $cfg)
     copy_folders($cfg);
 
     rename(
-        $cfg->directory . '/src/XXXPaymentGateway.php',
-        $cfg->directory . '/src/' . $cfg->gatewayStudly . 'PaymentGateway.php'
-    );
-
-    rename(
         $cfg->directory . '/tests/migrations/2021_03_17_095014_create_test_orders_table.php',
         $cfg->directory . '/tests/migrations/' . date('Y_m_d_His') . '_create_test_orders_table.php'
     );
@@ -137,6 +143,13 @@ function copy_file($source, $destination, Configuration $cfg)
         replace_vars(file_get_contents($source), $cfg)
     );
     echo "OK\n";
+
+    if (starts_with(basename($destination), 'XXX')) {
+        rename(
+            $destination,
+            dirname($destination) . '/' . str_replace('XXX', $cfg->gatewayStudly, basename($destination))
+        );
+    }
 }
 
 function replace_vars($string, Configuration $cfg): string
@@ -154,7 +167,7 @@ function replace_vars($string, Configuration $cfg): string
         '{:name_space_root:}' => $cfg->namespace,
         '{:github_repo_path:}' => $cfg->githubPath,
         '{:style_ci_id:}' => $cfg->styleCI,
-        'XXXPaymentGateway' => $cfg->gatewayStudly . 'PaymentGateway',
+        'XXX' => $cfg->gatewayStudly,
         '{:year:}' => date('Y'),
     ];
 
