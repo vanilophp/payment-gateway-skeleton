@@ -58,6 +58,8 @@ class XXXPaymentResponse implements PaymentResponse
 
     public function getAmountPaid(): ?float
     {
+        // Make sure to return a negative amount if the transaction
+        // the response represents was a refund, partial refund cancellation or similar etc
         return $this->amountPaid;
     }
 
