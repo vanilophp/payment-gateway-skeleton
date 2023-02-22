@@ -2,6 +2,7 @@
     "name": "{:composer_vendor:}/{:composer_package_name:}",
     "description": "{:payment_gateway_name:} Payment Gateway Support for Vanilo (Laravel)",
     "type": "library",
+    "keywords": ["laravel", "vanilo", "{:payment_gateway_name|slug:}", "payments"],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "license": "MIT",
